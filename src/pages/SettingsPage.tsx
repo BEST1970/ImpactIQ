@@ -244,7 +244,7 @@ function SettingsContent() {
           <div className="bg-slate-50/80 rounded-2xl p-5 border border-slate-100">
             <ListManager
               label={t('settings.entiteiten')}
-              items={localSettings.entiteiten}
+              items={[...localSettings.entiteiten].sort((a, b) => a.localeCompare(b))}
               onAdd={(v) => updateList('entiteiten', [...localSettings.entiteiten, v])}
               onRemove={(v) => updateList('entiteiten', localSettings.entiteiten.filter((i) => i !== v))}
             />
@@ -253,7 +253,7 @@ function SettingsContent() {
           <div className="bg-slate-50/80 rounded-2xl p-5 border border-slate-100">
             <ListManager
               label={t('settings.aiTools')}
-              items={localSettings.aiTools}
+              items={[...localSettings.aiTools].sort((a, b) => a.localeCompare(b))}
               onAdd={(v) => updateList('aiTools', [...localSettings.aiTools, v])}
               onRemove={(v) => updateList('aiTools', localSettings.aiTools.filter((i) => i !== v))}
             />
@@ -262,7 +262,7 @@ function SettingsContent() {
           <div className="bg-slate-50/80 rounded-2xl p-5 border border-slate-100">
             <ListManager
               label={t('settings.taakcategorien')}
-              items={localSettings.taakcategorieen}
+              items={[...localSettings.taakcategorieen].sort((a, b) => translateCategory(a).localeCompare(translateCategory(b)))}
               onAdd={(v) => updateList('taakcategorieen', [...localSettings.taakcategorieen, v])}
               onRemove={(v) => updateList('taakcategorieen', localSettings.taakcategorieen.filter((i) => i !== v))}
               translateItem={translateCategory}

@@ -148,15 +148,15 @@ export function DashboardPage() {
       <div className="flex flex-wrap gap-3">
         <select value={filterEntiteit} onChange={(e) => setFilterEntiteit(e.target.value)} className={selectCls}>
           <option value="">{t('dashboard.alleEntiteiten')}</option>
-          {settings?.entiteiten.map((v) => <option key={v} value={v}>{v}</option>)}
+          {settings?.entiteiten && [...settings.entiteiten].sort((a, b) => a.localeCompare(b)).map((v) => <option key={v} value={v}>{v}</option>)}
         </select>
         <select value={filterTool} onChange={(e) => setFilterTool(e.target.value)} className={selectCls}>
           <option value="">{t('dashboard.alleTools')}</option>
-          {settings?.aiTools.map((v) => <option key={v} value={v}>{v}</option>)}
+          {settings?.aiTools && [...settings.aiTools].sort((a, b) => a.localeCompare(b)).map((v) => <option key={v} value={v}>{v}</option>)}
         </select>
         <select value={filterCategorie} onChange={(e) => setFilterCategorie(e.target.value)} className={selectCls}>
           <option value="all">{t('dashboard.alleCategorieen')}</option>
-          {settings?.taakcategorieen.map((v) => <option key={v} value={v}>{cats[v] || v}</option>)}
+          {settings?.taakcategorieen && [...settings.taakcategorieen].sort((a, b) => (cats[a] || a).localeCompare(cats[b] || b)).map((v) => <option key={v} value={v}>{cats[v] || v}</option>)}
         </select>
       </div>
 

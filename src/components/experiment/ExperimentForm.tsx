@@ -179,7 +179,7 @@ export function ExperimentForm({ initialValues, settings, onSubmit, isSubmitting
               className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#6EB550]/40 focus:border-[#6EB550] transition bg-white"
             >
               <option value="">{t('form.entiteitPlaceholder')}</option>
-              {settings.entiteiten.map((e) => <option key={e} value={e}>{e}</option>)}
+              {[...settings.entiteiten].sort((a, b) => a.localeCompare(b)).map((e) => <option key={e} value={e}>{e}</option>)}
             </select>
           </Field>
 
@@ -190,7 +190,7 @@ export function ExperimentForm({ initialValues, settings, onSubmit, isSubmitting
               className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#6EB550]/40 focus:border-[#6EB550] transition bg-white"
             >
               <option value="">{t('form.aiToolPlaceholder')}</option>
-              {settings.aiTools.map((tool) => <option key={tool} value={tool}>{tool}</option>)}
+              {[...settings.aiTools].sort((a, b) => a.localeCompare(b)).map((tool) => <option key={tool} value={tool}>{tool}</option>)}
             </select>
           </Field>
 
@@ -201,7 +201,7 @@ export function ExperimentForm({ initialValues, settings, onSubmit, isSubmitting
               className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#6EB550]/40 focus:border-[#6EB550] transition bg-white"
             >
               <option value="">{t('form.categoriePlaceholder')}</option>
-              {settings.taakcategorieen.map((c) => <option key={c} value={c}>{cats[c] || c}</option>)}
+              {[...settings.taakcategorieen].sort((a, b) => (cats[a] || a).localeCompare(cats[b] || b)).map((c) => <option key={c} value={c}>{cats[c] || c}</option>)}
             </select>
           </Field>
 

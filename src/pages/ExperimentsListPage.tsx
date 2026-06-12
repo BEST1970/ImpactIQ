@@ -89,15 +89,15 @@ export function ExperimentsListPage() {
           </div>
           <select id="filter-entiteit" value={filterEntiteit} onChange={(e) => setFilterEntiteit(e.target.value)} className={selectCls}>
             <option value="">{t('list.alleEntiteiten')}</option>
-            {settings?.entiteiten.map((v) => <option key={v} value={v}>{v}</option>)}
+            {settings?.entiteiten && [...settings.entiteiten].sort((a, b) => a.localeCompare(b)).map((v) => <option key={v} value={v}>{v}</option>)}
           </select>
           <select id="filter-tool" value={filterTool} onChange={(e) => setFilterTool(e.target.value)} className={selectCls}>
             <option value="">{t('list.alleTools')}</option>
-            {settings?.aiTools.map((v) => <option key={v} value={v}>{v}</option>)}
+            {settings?.aiTools && [...settings.aiTools].sort((a, b) => a.localeCompare(b)).map((v) => <option key={v} value={v}>{v}</option>)}
           </select>
           <select id="filter-categorie" value={filterCategorie} onChange={(e) => setFilterCategorie(e.target.value)} className={selectCls}>
             <option value="">{t('list.alleCategorieen')}</option>
-            {settings?.taakcategorieen.map((v) => <option key={v} value={v}>{cats[v] || v}</option>)}
+            {settings?.taakcategorieen && [...settings.taakcategorieen].sort((a, b) => (cats[a] || a).localeCompare(cats[b] || b)).map((v) => <option key={v} value={v}>{cats[v] || v}</option>)}
           </select>
         </div>
       )}
