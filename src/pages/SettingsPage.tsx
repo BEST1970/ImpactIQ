@@ -14,11 +14,13 @@ function ListManager({
   items,
   onAdd,
   onRemove,
+  translateItem,
 }: {
   label: string;
   items: string[];
   onAdd: (val: string) => void;
   onRemove: (val: string) => void;
+  translateItem?: (val: string) => string;
 }) {
   const { t } = useTranslation();
   const [input, setInput] = useState('');
@@ -58,7 +60,7 @@ function ListManager({
             key={item}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white shadow-sm border border-slate-200 text-sm text-slate-700 font-medium hover:border-[#2455A2]/30 transition-colors"
           >
-            <span>{item}</span>
+            <span>{translateItem ? translateItem(item) : item}</span>
             <button
               type="button"
               onClick={() => onRemove(item)}
@@ -154,6 +156,8 @@ function PinChangeSection() {
 
 function SettingsContent() {
   const { t } = useTranslation();
+  const cats = (t('categories', { returnObjects: true }) as Record<string, string>) || {};
+  const translateCategory = (v: string) => cats[v] || v;
   const { service, settings, refresh } = useStorage();
   const [localSettings, setLocalSettings] = useState<AppSettings | null>(settings);
   const [saving, setSaving]               = useState(false);
@@ -261,6 +265,7 @@ function SettingsContent() {
               items={localSettings.taakcategorieen}
               onAdd={(v) => updateList('taakcategorieen', [...localSettings.taakcategorieen, v])}
               onRemove={(v) => updateList('taakcategorieen', localSettings.taakcategorieen.filter((i) => i !== v))}
+              translateItem={translateCategory}
             />
           </div>
         </div>
