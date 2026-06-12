@@ -33,8 +33,8 @@ function ListManager({
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-slate-700 mb-3">{label}</h3>
-      <div className="flex gap-2 mb-3">
+      <h3 className="text-sm font-bold text-slate-800 mb-3">{label}</h3>
+      <div className="flex gap-2 mb-4">
         <input
           type="text"
           value={input}
@@ -56,7 +56,7 @@ function ListManager({
         {items.map((item) => (
           <div
             key={item}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-700"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white shadow-sm border border-slate-200 text-sm text-slate-700 font-medium hover:border-[#2455A2]/30 transition-colors"
           >
             <span>{item}</span>
             <button
@@ -233,27 +233,39 @@ function SettingsContent() {
       </div>
 
       {/* ── Keuzelijsten ── */}
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-6">
-        <h2 className="text-base font-semibold text-slate-800 border-b border-slate-100 pb-3">{t('settings.keuzelijsten')}</h2>
-        <ListManager
-          label={t('settings.entiteiten')}
-          items={localSettings.entiteiten}
-          onAdd={(v) => updateList('entiteiten', [...localSettings.entiteiten, v])}
-          onRemove={(v) => updateList('entiteiten', localSettings.entiteiten.filter((i) => i !== v))}
-        />
-        <ListManager
-          label={t('settings.aiTools')}
-          items={localSettings.aiTools}
-          onAdd={(v) => updateList('aiTools', [...localSettings.aiTools, v])}
-          onRemove={(v) => updateList('aiTools', localSettings.aiTools.filter((i) => i !== v))}
-        />
-        <ListManager
-          label={t('settings.taakcategorien')}
-          items={localSettings.taakcategorieen}
-          onAdd={(v) => updateList('taakcategorieen', [...localSettings.taakcategorieen, v])}
-          onRemove={(v) => updateList('taakcategorieen', localSettings.taakcategorieen.filter((i) => i !== v))}
-        />
-        <div className="flex justify-end pt-2">
+      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
+        <h2 className="text-lg font-semibold text-slate-800 border-b border-slate-100 pb-4 mb-6">{t('settings.keuzelijsten')}</h2>
+        
+        <div className="space-y-6">
+          <div className="bg-slate-50/80 rounded-2xl p-5 border border-slate-100">
+            <ListManager
+              label={t('settings.entiteiten')}
+              items={localSettings.entiteiten}
+              onAdd={(v) => updateList('entiteiten', [...localSettings.entiteiten, v])}
+              onRemove={(v) => updateList('entiteiten', localSettings.entiteiten.filter((i) => i !== v))}
+            />
+          </div>
+
+          <div className="bg-slate-50/80 rounded-2xl p-5 border border-slate-100">
+            <ListManager
+              label={t('settings.aiTools')}
+              items={localSettings.aiTools}
+              onAdd={(v) => updateList('aiTools', [...localSettings.aiTools, v])}
+              onRemove={(v) => updateList('aiTools', localSettings.aiTools.filter((i) => i !== v))}
+            />
+          </div>
+
+          <div className="bg-slate-50/80 rounded-2xl p-5 border border-slate-100">
+            <ListManager
+              label={t('settings.taakcategorien')}
+              items={localSettings.taakcategorieen}
+              onAdd={(v) => updateList('taakcategorieen', [...localSettings.taakcategorieen, v])}
+              onRemove={(v) => updateList('taakcategorieen', localSettings.taakcategorieen.filter((i) => i !== v))}
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-end pt-6 mt-6 border-t border-slate-100">
           {saved && (
             <span className="text-sm text-[#00833D] font-medium mr-4 self-center animate-fade-in">
               ✓ {t('settings.opgeslagen')}
@@ -263,7 +275,7 @@ function SettingsContent() {
             id="save-settings-btn"
             onClick={handleSave}
             disabled={saving}
-            className="px-6 py-2.5 rounded-xl bg-[#6EB550] text-white font-semibold text-sm hover:bg-[#5ea042] transition-colors disabled:opacity-60"
+            className="px-6 py-2.5 rounded-xl bg-[#6EB550] text-white font-semibold text-sm hover:bg-[#5ea042] transition-colors shadow-sm disabled:opacity-60"
           >
             {t('settings.opslaanBtn')}
           </button>
