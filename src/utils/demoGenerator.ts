@@ -25,7 +25,7 @@ const scenarios = [
   { tool: 'Claude', cat: 'Tekst schrijven', task: 'Schrijven van een blogpost voor LinkedIn over onze duurzaamheidsdoelen.', tV: 60, tM: 20, qual: 5, corr: false }
 ];
 
-const entiteiten = ['CFE Group', 'VMA', 'Mobix', 'MBG', 'Van Laere', 'BPC', 'BPI', 'Wood Shapers'];
+const entiteiten = ['CFE', 'VMA', 'Mobix', 'MBG', 'Van Laere', 'BPC', 'BPI', 'Wood Shapers'];
 const voornamen = ['Jan', 'Marie', 'Pieter', 'Sophie', 'Tom', 'Laura', 'Kevin', 'An', 'Wouter', 'Sarah', 'Klaas', 'Emma', 'Lukas', 'Julie', 'Bart'];
 const achternamen = ['Peeters', 'Janssens', 'Maes', 'Jacobs', 'Mertens', 'Willems', 'Claes', 'Goossens', 'Wouters', 'De Smet'];
 

@@ -140,6 +140,35 @@ function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: 
   );
 }
 
+// ─── Chart Toggle ─────────────────────────────────────────────────────────────
+
+function ChartToggle({
+  optionA, labelA,
+  optionB, labelB,
+  value, onChange
+}: {
+  optionA: string; labelA: string;
+  optionB: string; labelB: string;
+  value: string; onChange: (val: any) => void;
+}) {
+  return (
+    <div className="flex bg-slate-100 rounded-lg p-1 text-xs font-medium">
+      <button 
+        onClick={() => onChange(optionA)}
+        className={`px-3 py-1.5 rounded-md transition-all ${value === optionA ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+      >
+        {labelA}
+      </button>
+      <button 
+        onClick={() => onChange(optionB)}
+        className={`px-3 py-1.5 rounded-md transition-all ${value === optionB ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+      >
+        {labelB}
+      </button>
+    </div>
+  );
+}
+
 // ─── DashboardPage ────────────────────────────────────────────────────────────
 
 export function DashboardPage() {
@@ -150,6 +179,10 @@ export function DashboardPage() {
   const [filterEntiteit, setFilterEntiteit] = useState('');
   const [filterTool, setFilterTool] = useState('');
   const [filterCategorie, setFilterCategorie] = useState('');
+
+  const [viewCatKwaliteit, setViewCatKwaliteit] = useState<'score' | 'correctie'>('score');
+  const [viewAdoptie, setViewAdoptie] = useState<'verder' | 'vertrouwen'>('verder');
+  const [viewToolKwaliteit, setViewToolKwaliteit] = useState<'score' | 'correctie'>('score');
 
   if (loading) {
     return (
@@ -383,19 +416,26 @@ export function DashboardPage() {
 
           {/* ── BENTO: Grafiek 2 (Kwaliteit) ── */}
           {perCat.length > 0 && (
-            <div className="col-span-1 md:col-span-1 lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8">
-              <SectionTitle>
-                <span className="w-4 h-4 rounded-full bg-[#2455A2] inline-block shadow-sm" />
-                {t('dashboard.grafiek2Titel')}
-              </SectionTitle>
-              <div className="mt-8">
-                <ResponsiveContainer width="100%" height={260}>
-                  <BarChart data={perCat.filter(c => c.gemKwaliteit !== null)} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <div className="col-span-1 md:col-span-1 lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8 flex flex-col">
+              <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-8">
+                <SectionTitle>
+                  <span className="w-4 h-4 rounded-full bg-[#2455A2] inline-block shadow-sm" />
+                  {t('dashboard.grafiek2Titel')}
+                </SectionTitle>
+                <ChartToggle 
+                  optionA="score" labelA={t('dashboard.kpiKwaliteit')}
+                  optionB="correctie" labelB={t('dashboard.kpiZonderCorrectie')}
+                  value={viewCatKwaliteit} onChange={setViewCatKwaliteit} 
+                />
+              </div>
+              <div className="flex-1 min-h-[260px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={perCat.filter(c => viewCatKwaliteit === 'score' ? c.gemKwaliteit !== null : c.pctZonderCorrectie !== null)} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
                     <XAxis dataKey="categorie" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
-                    <YAxis domain={[0, 5]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                    <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(1).replace('.', ',')} / 5`} />
-                    <Bar dataKey="gemKwaliteit" radius={[8, 8, 0, 0]} fill="#2455A2" name={t('dashboard.kpiKwaliteit')} />
+                    <YAxis domain={viewCatKwaliteit === 'score' ? [0, 5] : [0, 100]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                    <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => viewCatKwaliteit === 'score' ? `${(v as number).toFixed(1).replace('.', ',')} / 5` : `${(v as number).toFixed(0)}%`} />
+                    <Bar dataKey={viewCatKwaliteit === 'score' ? "gemKwaliteit" : "pctZonderCorrectie"} radius={[8, 8, 0, 0]} fill="#2455A2" name={viewCatKwaliteit === 'score' ? t('dashboard.kpiKwaliteit') : t('dashboard.kpiZonderCorrectie')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -404,19 +444,26 @@ export function DashboardPage() {
 
           {/* ── BENTO: Grafiek 3 (Adoptie) ── */}
           {perTool.length > 0 && (
-            <div className="col-span-1 md:col-span-1 lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8">
-              <SectionTitle>
-                <span className="w-4 h-4 rounded-full bg-[#00A4A8] inline-block shadow-sm" />
-                {t('dashboard.grafiek3Titel')}
-              </SectionTitle>
-              <div className="mt-8">
-                <ResponsiveContainer width="100%" height={260}>
-                  <BarChart data={perTool} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <div className="col-span-1 md:col-span-1 lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8 flex flex-col">
+              <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-8">
+                <SectionTitle>
+                  <span className="w-4 h-4 rounded-full bg-[#00A4A8] inline-block shadow-sm" />
+                  {t('dashboard.grafiek3Titel')}
+                </SectionTitle>
+                <ChartToggle 
+                  optionA="verder" labelA={t('dashboard.kpiVerder')}
+                  optionB="vertrouwen" labelB={t('dashboard.kpiVertrouwen')}
+                  value={viewAdoptie} onChange={setViewAdoptie} 
+                />
+              </div>
+              <div className="flex-1 min-h-[260px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={perTool.filter(t => viewAdoptie === 'verder' ? t.pctVerderGebruiken !== null : t.gemVertrouwen !== null)} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
                     <XAxis dataKey="tool" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
-                    <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                    <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(0)}%`} />
-                    <Bar dataKey="pctVerderGebruiken" radius={[8, 8, 0, 0]} fill="#00A4A8" name={t('dashboard.kpiVerder')} />
+                    <YAxis domain={viewAdoptie === 'verder' ? [0, 100] : [0, 5]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                    <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => viewAdoptie === 'verder' ? `${(v as number).toFixed(0)}%` : `${(v as number).toFixed(1).replace('.', ',')} / 5`} />
+                    <Bar dataKey={viewAdoptie === 'verder' ? "pctVerderGebruiken" : "gemVertrouwen"} radius={[8, 8, 0, 0]} fill="#00A4A8" name={viewAdoptie === 'verder' ? t('dashboard.kpiVerder') : t('dashboard.kpiVertrouwen')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -425,19 +472,26 @@ export function DashboardPage() {
 
           {/* ── BENTO: Grafiek 4 (Kwaliteit per Tool) ── */}
           {perTool.length > 0 && (
-            <div className="col-span-1 md:col-span-1 lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8">
-              <SectionTitle>
-                <span className="w-4 h-4 rounded-full bg-[#2455A2] inline-block shadow-sm" />
-                {t('dashboard.grafiek4Titel', 'Kwaliteit per AI-tool')}
-              </SectionTitle>
-              <div className="mt-8">
-                <ResponsiveContainer width="100%" height={260}>
-                  <BarChart data={perTool.filter(t => t.gemKwaliteit !== null)} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <div className="col-span-1 md:col-span-1 lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8 flex flex-col">
+              <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-8">
+                <SectionTitle>
+                  <span className="w-4 h-4 rounded-full bg-[#2455A2] inline-block shadow-sm" />
+                  {t('dashboard.grafiek4Titel', 'Kwaliteit per AI-tool')}
+                </SectionTitle>
+                <ChartToggle 
+                  optionA="score" labelA={t('dashboard.kpiKwaliteit')}
+                  optionB="correctie" labelB={t('dashboard.kpiZonderCorrectie')}
+                  value={viewToolKwaliteit} onChange={setViewToolKwaliteit} 
+                />
+              </div>
+              <div className="flex-1 min-h-[260px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={perTool.filter(t => viewToolKwaliteit === 'score' ? t.gemKwaliteit !== null : t.pctZonderCorrectie !== null)} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
                     <XAxis dataKey="tool" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
-                    <YAxis domain={[0, 5]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                    <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(1).replace('.', ',')} / 5`} />
-                    <Bar dataKey="gemKwaliteit" radius={[8, 8, 0, 0]} fill="#2455A2" name={t('dashboard.kpiKwaliteit')} />
+                    <YAxis domain={viewToolKwaliteit === 'score' ? [0, 5] : [0, 100]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                    <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => viewToolKwaliteit === 'score' ? `${(v as number).toFixed(1).replace('.', ',')} / 5` : `${(v as number).toFixed(0)}%`} />
+                    <Bar dataKey={viewToolKwaliteit === 'score' ? "gemKwaliteit" : "pctZonderCorrectie"} radius={[8, 8, 0, 0]} fill="#2455A2" name={viewToolKwaliteit === 'score' ? t('dashboard.kpiKwaliteit') : t('dashboard.kpiZonderCorrectie')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

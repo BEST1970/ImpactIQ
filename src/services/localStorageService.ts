@@ -8,7 +8,7 @@ const SETTINGS_KEY    = 'impactiq:settings';
 // ─── Default settings ─────────────────────────────────────────────────────────
 
 const DEFAULT_SETTINGS: AppSettings = {
-  entiteiten: ['CFE Group', 'VMA', 'Mobix', 'MBG', 'Van Laere', 'BPC', 'BPI', 'Wood Shapers'],
+  entiteiten: ['CFE', 'VMA', 'Mobix', 'MBG', 'Van Laere', 'BPC', 'BPI', 'Wood Shapers'],
   aiTools: ['ChatGPT', 'Claude', 'Microsoft Copilot', 'Gemini', 'Mistral', 'Perplexity'],
   taakcategorieen: [
     'Calculatie',

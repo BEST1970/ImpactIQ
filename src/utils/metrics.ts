@@ -100,7 +100,9 @@ export interface ToolSummary {
   bespaardPerMaandUur: number; // can be negative!
   basisVolumePerMaandUur: number;
   gemKwaliteit: number | null;
+  pctZonderCorrectie: number | null;
   pctVerderGebruiken: number | null;
+  gemVertrouwen: number | null;
   gemProcentueleBesparing: number | null;
   pctNieuwWerk: number | null;
   pctMeertijdAnalyse: number | null;
@@ -124,7 +126,9 @@ export function computePerTool(experiments: Experiment[]): ToolSummary[] {
       bespaardPerMaandUur: totalMin / 60,
       basisVolumePerMaandUur: basisMin / 60,
       gemKwaliteit: avg(exps.map((e) => e.kwaliteitScore)),
+      pctZonderCorrectie: pct(exps.filter((e) => !e.correctieNodig).length, n),
       pctVerderGebruiken: pct(exps.filter((e) => e.verderGebruiken).length, n),
+      gemVertrouwen: avg(exps.map((e) => e.vertrouwen)),
       gemProcentueleBesparing: avg(derived.map((d) => d.procentueleBesparing).filter((p): p is number => p !== null)),
       pctNieuwWerk: pct(exps.filter((e) => e.nieuwWerkMogelijk).length, n),
       pctMeertijdAnalyse: pct(exps.filter((e) => e.meertijdVoorAnalyse).length, n),
@@ -138,6 +142,7 @@ export interface CategorySummary {
   categorie: string;
   experimenten: number;
   gemKwaliteit: number | null;
+  pctZonderCorrectie: number | null;
   bespaardPerMaandUur: number;
 }
 
@@ -155,6 +160,7 @@ export function computePerCategory(experiments: Experiment[]): CategorySummary[]
       categorie,
       experimenten: exps.length,
       gemKwaliteit: avg(exps.map((e) => e.kwaliteitScore)),
+      pctZonderCorrectie: pct(exps.filter((e) => !e.correctieNodig).length, exps.length),
       bespaardPerMaandUur: totalMin / 60,
     };
   });
