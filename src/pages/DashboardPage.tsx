@@ -212,12 +212,12 @@ export function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           
           {/* ── BENTO: Kerncijfers (Hero) ── */}
-          <div className="col-span-1 md:col-span-2 lg:col-span-4 bg-[#1A3F81] rounded-3xl p-6 sm:p-8 lg:p-10 shadow-lg flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 lg:gap-12 relative overflow-hidden group">
+          <div className="col-span-1 md:col-span-2 lg:col-span-4 bg-[#1A3F81] rounded-3xl p-6 sm:p-8 lg:p-10 shadow-lg flex flex-col gap-8 lg:gap-10 relative overflow-hidden group">
             {/* Decoratieve achtergrond elementen */}
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition duration-700 pointer-events-none" />
             <div className="absolute -bottom-24 left-12 w-48 h-48 bg-[#58B3E6]/10 rounded-full blur-2xl pointer-events-none" />
             
-            <div className="max-w-xs lg:max-w-sm relative z-10">
+            <div className="relative z-10 w-full">
               <SectionTitle dark>
                 <div className="p-2.5 bg-white/10 rounded-xl backdrop-blur-sm shadow-inner">
                   <Clock className="w-6 h-6 text-[#58B3E6]" />
@@ -225,7 +225,22 @@ export function DashboardPage() {
                 {t('dashboard.sectionTijdwinst')}
               </SectionTitle>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 w-full lg:w-auto relative z-10 border-t border-white/10 pt-8 lg:border-t-0 lg:pt-0">
+            
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 w-full relative z-10 border-t border-white/10 pt-8 lg:border-t-0 lg:pt-0">
+              <KpiCard
+                label={t('dashboard.kpiAantal')}
+                value={String(m.totaalExperimenten)}
+                sub={t('dashboard.kpiAantalSub')}
+                big
+                dark
+              />
+              <KpiCard
+                label={t('dashboard.kpiBasisVolume')}
+                value={formatUren(m.totaalBasisVolumePerMaandMin / 60)}
+                sub={t('dashboard.kpiBasisVolumeSub')}
+                big
+                dark
+              />
               <KpiCard
                 label={t('dashboard.kpiPerMaand')}
                 value={formatUren(m.totaalBespaardPerJaarUur / 12)}
@@ -235,19 +250,12 @@ export function DashboardPage() {
                 isNegative={isNegativeMaand}
               />
               <KpiCard
-                label={t('dashboard.kpiPerJaar')}
-                value={formatUren(m.totaalBespaardPerJaarUur)}
-                sub={t('dashboard.kpiPerJaarSub')}
+                label={t('dashboard.kpiRelatief')}
+                value={m.gemProcentueleBesparing !== null ? `${m.gemProcentueleBesparing >= 0 ? '+' : ''}${m.gemProcentueleBesparing.toFixed(1).replace('.', ',')}%` : '-'}
+                sub={t('dashboard.kpiRelatiefSub')}
                 big
                 dark
-                isNegative={m.totaalBespaardPerJaarUur < 0}
-              />
-              <KpiCard
-                label={t('dashboard.kpiAantal')}
-                value={String(m.totaalExperimenten)}
-                sub={t('dashboard.kpiAantalSub')}
-                big
-                dark
+                isNegative={(m.gemProcentueleBesparing ?? 0) < 0}
               />
             </div>
           </div>

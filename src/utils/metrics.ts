@@ -15,6 +15,7 @@ export interface DashboardMetrics {
   gemVertrouwen: number | null;
 
   // Niveau 3 – kerncijfers (inclusief negatieve waarden!)
+  totaalBasisVolumePerMaandMin: number;
   totaalBespaardPerMaandMin: number;
   totaalBespaardPerJaarUur: number;
   gemProcentueleBesparing: number | null;
@@ -45,6 +46,7 @@ export function computeMetrics(experiments: Experiment[]): DashboardMetrics {
       pctZonderCorrectie: null,
       pctVerderGebruiken: null,
       gemVertrouwen: null,
+      totaalBasisVolumePerMaandMin: 0,
       totaalBespaardPerMaandMin: 0,
       totaalBespaardPerJaarUur: 0,
       gemProcentueleBesparing: null,
@@ -58,6 +60,10 @@ export function computeMetrics(experiments: Experiment[]): DashboardMetrics {
 
   const totaalBespaardPerMaandMin = derived.reduce(
     (sum, d) => sum + d.bespaardPerMaandMin,
+    0
+  );
+  const totaalBasisVolumePerMaandMin = derived.reduce(
+    (sum, d) => sum + d.basisVolumePerMaandMin,
     0
   );
   const totaalBespaardPerJaarUur = (totaalBespaardPerMaandMin * 12) / 60;
@@ -75,6 +81,7 @@ export function computeMetrics(experiments: Experiment[]): DashboardMetrics {
     pctVerderGebruiken: pct(experiments.filter((e) => e.verderGebruiken).length, n),
     gemVertrouwen: avg(experiments.map((e) => e.vertrouwen)),
 
+    totaalBasisVolumePerMaandMin,
     totaalBespaardPerMaandMin,
     totaalBespaardPerJaarUur,
     gemProcentueleBesparing: avg(pctVals),
