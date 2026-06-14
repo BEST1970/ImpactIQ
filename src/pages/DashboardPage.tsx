@@ -451,7 +451,7 @@ export function DashboardPage() {
                     <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                     <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(0)}%`} />
                     <Bar dataKey="pctNieuwWerk" radius={[8, 8, 0, 0]} fill="#6F65AA" name={t('dashboard.kpiNieuwWerk')} />
-                    <Bar dataKey="pctMeertijdAnalyse" radius={[8, 8, 0, 0]} fill="#A78BFA" name={t('dashboard.kpiMeertijdAnalyse')} />
+                    <Bar dataKey="pctMeertijdAnalyse" radius={[8, 8, 0, 0]} fill="#A78BFA" name={t('dashboard.kpiMeertijd')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
