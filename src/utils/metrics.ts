@@ -95,7 +95,8 @@ export interface ToolSummary {
   gemKwaliteit: number | null;
   pctVerderGebruiken: number | null;
   gemProcentueleBesparing: number | null;
-  pctWerkverrijking: number | null;
+  pctNieuwWerk: number | null;
+  pctMeertijdAnalyse: number | null;
 }
 
 export function computePerTool(experiments: Experiment[]): ToolSummary[] {
@@ -118,7 +119,8 @@ export function computePerTool(experiments: Experiment[]): ToolSummary[] {
       gemKwaliteit: avg(exps.map((e) => e.kwaliteitScore)),
       pctVerderGebruiken: pct(exps.filter((e) => e.verderGebruiken).length, n),
       gemProcentueleBesparing: avg(derived.map((d) => d.procentueleBesparing).filter((p): p is number => p !== null)),
-      pctWerkverrijking: pct(exps.filter((e) => e.nieuwWerkMogelijk || e.meertijdVoorAnalyse).length, n),
+      pctNieuwWerk: pct(exps.filter((e) => e.nieuwWerkMogelijk).length, n),
+      pctMeertijdAnalyse: pct(exps.filter((e) => e.meertijdVoorAnalyse).length, n),
     };
   });
 }

@@ -351,7 +351,7 @@ export function DashboardPage() {
                     yAxisId="left"
                     dataKey="bespaardPerMaandUur"
                     radius={[8, 8, 0, 0]}
-                    name="Uren/maand"
+                    name={t('dashboard.urenPerMaand', 'Uren/maand')}
                   >
                     {perTool.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.bespaardPerMaandUur < 0 ? '#ef4444' : '#6EB550'} />
@@ -362,7 +362,7 @@ export function DashboardPage() {
                     yAxisId="right"
                     type="monotone" 
                     dataKey="gemProcentueleBesparing" 
-                    name="% Tijdwinst" 
+                    name={t('dashboard.kpiBesparing')} 
                     stroke="#2455A2" 
                     strokeWidth={3}
                     dot={{ r: 4, strokeWidth: 2, fill: '#fff', stroke: '#2455A2' }} 
@@ -387,7 +387,7 @@ export function DashboardPage() {
                     <XAxis dataKey="categorie" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
                     <YAxis domain={[0, 5]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                     <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(1).replace('.', ',')} / 5`} />
-                    <Bar dataKey="gemKwaliteit" radius={[8, 8, 0, 0]} fill="#2455A2" name="Gem. kwaliteit" />
+                    <Bar dataKey="gemKwaliteit" radius={[8, 8, 0, 0]} fill="#2455A2" name={t('dashboard.kpiKwaliteit')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -408,7 +408,7 @@ export function DashboardPage() {
                     <XAxis dataKey="tool" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
                     <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                     <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(0)}%`} />
-                    <Bar dataKey="pctVerderGebruiken" radius={[8, 8, 0, 0]} fill="#00A4A8" name="% Adoptie" />
+                    <Bar dataKey="pctVerderGebruiken" radius={[8, 8, 0, 0]} fill="#00A4A8" name={t('dashboard.kpiVerder')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -429,7 +429,7 @@ export function DashboardPage() {
                     <XAxis dataKey="tool" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
                     <YAxis domain={[0, 5]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                     <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(1).replace('.', ',')} / 5`} />
-                    <Bar dataKey="gemKwaliteit" radius={[8, 8, 0, 0]} fill="#2455A2" name="Gem. kwaliteit" />
+                    <Bar dataKey="gemKwaliteit" radius={[8, 8, 0, 0]} fill="#2455A2" name={t('dashboard.kpiKwaliteit')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -440,17 +440,18 @@ export function DashboardPage() {
           {perTool.length > 0 && (
             <div className="col-span-1 md:col-span-1 lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-8">
               <SectionTitle>
-                <span className="w-4 h-4 rounded-full bg-[#6EB550] inline-block shadow-sm" />
+                <span className="w-4 h-4 rounded-full bg-[#6F65AA] inline-block shadow-sm" />
                 {t('dashboard.grafiek5Titel', 'Werkverrijking per AI-tool')}
               </SectionTitle>
               <div className="mt-8">
                 <ResponsiveContainer width="100%" height={260}>
-                  <BarChart data={perTool.filter(t => t.pctWerkverrijking !== null)} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <BarChart data={perTool} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
                     <XAxis dataKey="tool" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
                     <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                     <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(0)}%`} />
-                    <Bar dataKey="pctWerkverrijking" radius={[8, 8, 0, 0]} fill="#6EB550" name="% Werkverrijking" />
+                    <Bar dataKey="pctNieuwWerk" radius={[8, 8, 0, 0]} fill="#6F65AA" name={t('dashboard.kpiNieuwWerk')} />
+                    <Bar dataKey="pctMeertijdAnalyse" radius={[8, 8, 0, 0]} fill="#A78BFA" name={t('dashboard.kpiMeertijdAnalyse')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
