@@ -156,7 +156,7 @@ export function formatUren(uur: number): string {
 }
 
 export function formatPct(val: number | null): string {
-  if (val === null) return '—';
+  if (val === null) return '-';
   const formatted = val.toFixed(1).replace('.', ',');
   return `${val >= 0 ? '+' : ''}${formatted}%`;
 }

@@ -343,7 +343,7 @@ export function ExperimentForm({ initialValues, settings, onSubmit, isSubmitting
                 { label: t('form.previewPerTaak'), value: `${bespaard > 0 ? '+' : ''}${bespaard} min` },
                 { label: t('form.previewPerMaand'), value: `${bespaardMaand > 0 ? '+' : ''}${Math.round(bespaardMaand)} min` },
                 { label: t('form.previewPerJaar'), value: `${bespaardJaar > 0 ? '+' : ''}${Math.round(bespaardJaar).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} u` },
-                { label: t('form.previewBesparing'), value: pct !== null ? `${pct.toFixed(1).replace('.', ',')}%` : '—' },
+                { label: t('form.previewBesparing'), value: pct !== null ? `${pct.toFixed(1).replace('.', ',')}%` : '-' },
               ].map(({ label, value }) => (
                 <div key={label} className="text-center">
                   <p className="text-xs text-slate-500 mb-0.5">{label}</p>

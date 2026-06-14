@@ -1,4 +1,4 @@
-// Standalone CFE crystal icon — pure SVG paths, no PNG artefacts
+// Standalone CFE crystal icon - pure SVG paths, no PNG artefacts
 // Extracted from ProjectPlaybook/Logo/CFE.svg and Sidebar.tsx
 
 interface CrystalIconProps {

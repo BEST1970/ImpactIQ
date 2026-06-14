@@ -1,7 +1,7 @@
 import { Database } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-// Persistent banner shown on every page — makes local storage limitation explicit
+// Persistent banner shown on every page - makes local storage limitation explicit
 export function DataLocalBanner() {
   const { t } = useTranslation();
   return (

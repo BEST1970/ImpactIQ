@@ -218,11 +218,11 @@ export function DashboardPage() {
             <div className="space-y-6 flex-1">
               <KpiCard
                 label={t('dashboard.kpiKwaliteit')}
-                value={m.gemKwaliteit !== null ? `${m.gemKwaliteit.toFixed(1).replace('.', ',')} / 5` : '—'}
+                value={m.gemKwaliteit !== null ? `${m.gemKwaliteit.toFixed(1).replace('.', ',')} / 5` : '-'}
               />
               <KpiCard
                 label={t('dashboard.kpiZonderCorrectie')}
-                value={m.pctZonderCorrectie !== null ? `${m.pctZonderCorrectie.toFixed(0)}%` : '—'}
+                value={m.pctZonderCorrectie !== null ? `${m.pctZonderCorrectie.toFixed(0)}%` : '-'}
               />
             </div>
           </div>
@@ -236,11 +236,11 @@ export function DashboardPage() {
             <div className="space-y-6 flex-1">
               <KpiCard
                 label={t('dashboard.kpiVerder')}
-                value={m.pctVerderGebruiken !== null ? `${m.pctVerderGebruiken.toFixed(0)}%` : '—'}
+                value={m.pctVerderGebruiken !== null ? `${m.pctVerderGebruiken.toFixed(0)}%` : '-'}
               />
               <KpiCard
                 label={t('dashboard.kpiVertrouwen')}
-                value={m.gemVertrouwen !== null ? `${m.gemVertrouwen.toFixed(1).replace('.', ',')} / 5` : '—'}
+                value={m.gemVertrouwen !== null ? `${m.gemVertrouwen.toFixed(1).replace('.', ',')} / 5` : '-'}
               />
             </div>
           </div>
@@ -254,12 +254,12 @@ export function DashboardPage() {
             <div className="space-y-6 flex-1">
               <KpiCard
                 label={t('dashboard.kpiBesparing')}
-                value={m.gemProcentueleBesparing !== null ? `${m.gemProcentueleBesparing.toFixed(1).replace('.', ',')}%` : '—'}
+                value={m.gemProcentueleBesparing !== null ? `${m.gemProcentueleBesparing.toFixed(1).replace('.', ',')}%` : '-'}
                 isNegative={(m.gemProcentueleBesparing ?? 0) < 0}
               />
               <KpiCard
                 label={t('dashboard.kpiFouten')}
-                value={m.pctMinderFouten !== null ? `${m.pctMinderFouten.toFixed(0)}%` : '—'}
+                value={m.pctMinderFouten !== null ? `${m.pctMinderFouten.toFixed(0)}%` : '-'}
               />
             </div>
           </div>
@@ -273,11 +273,11 @@ export function DashboardPage() {
             <div className="space-y-6 flex-1">
               <KpiCard
                 label={t('dashboard.kpiNieuwWerk')}
-                value={m.pctNieuwWerk !== null ? `${m.pctNieuwWerk.toFixed(0)}%` : '—'}
+                value={m.pctNieuwWerk !== null ? `${m.pctNieuwWerk.toFixed(0)}%` : '-'}
               />
               <KpiCard
                 label={t('dashboard.kpiMeertijd')}
-                value={m.pctMeertijdAnalyse !== null ? `${m.pctMeertijdAnalyse.toFixed(0)}%` : '—'}
+                value={m.pctMeertijdAnalyse !== null ? `${m.pctMeertijdAnalyse.toFixed(0)}%` : '-'}
               />
             </div>
           </div>
