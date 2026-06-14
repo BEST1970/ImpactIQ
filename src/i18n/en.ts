@@ -177,6 +177,8 @@ const en = {
     grafiek1Note: 'Red bars = time lost',
     grafiek2Titel: 'Quality score per task category',
     grafiek3Titel: 'Adoption rate per AI tool (% \u201cwould continue\u201d)',
+    grafiek4Titel: 'Quality per AI tool',
+    grafiek5Titel: 'Job enrichment per AI tool',
   },
   settings: {
     titel: 'Settings',

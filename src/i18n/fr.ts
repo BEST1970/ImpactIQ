@@ -177,6 +177,8 @@ const fr = {
     grafiek1Note: 'Barres rouges = perte de temps',
     grafiek2Titel: 'Score qualit\u00e9 par cat\u00e9gorie de t\u00e2che',
     grafiek3Titel: 'Taux d\u2019adoption par outil IA (% \u00ab continuer \u00bb)',
+    grafiek4Titel: 'Qualité par outil IA',
+    grafiek5Titel: 'Enrichissement du travail par outil IA',
   },
   settings: {
     titel: 'Param\u00e8tres',

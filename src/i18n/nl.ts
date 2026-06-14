@@ -177,6 +177,8 @@ const nl = {
     grafiek1Note: 'Rode balken = tijdverlies',
     grafiek2Titel: 'Kwaliteitsscore per taakcategorie',
     grafiek3Titel: 'Adoptieratio per AI-tool (% \u201cverder gebruiken\u201d)',
+    grafiek4Titel: 'Kwaliteit per AI-tool',
+    grafiek5Titel: 'Werkverrijking per AI-tool',
   },
   settings: {
     titel: 'Instellingen',
