@@ -354,7 +354,7 @@ export function DashboardPage() {
                     name={t('dashboard.urenPerMaand', 'Uren/maand')}
                   >
                     {perTool.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.bespaardPerMaandUur < 0 ? '#ef4444' : '#6EB550'} />
+                      <Cell key={`cell-${index}`} fill={entry.bespaardPerMaandUur < 0 ? '#FEF2F2' : '#F2FCEE'} stroke={entry.bespaardPerMaandUur < 0 ? '#ef4444' : '#12A03C'} strokeWidth={1.5} />
                     ))}
                   </Bar>
 
@@ -387,7 +387,7 @@ export function DashboardPage() {
                     <XAxis dataKey="categorie" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
                     <YAxis domain={[0, 5]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                     <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(1).replace('.', ',')} / 5`} />
-                    <Bar dataKey="gemKwaliteit" radius={[8, 8, 0, 0]} fill="#2455A2" name={t('dashboard.kpiKwaliteit')} />
+                    <Bar dataKey="gemKwaliteit" radius={[8, 8, 0, 0]} fill="#F0F7FF" stroke="#2455A2" strokeWidth={1.5} name={t('dashboard.kpiKwaliteit')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -408,7 +408,7 @@ export function DashboardPage() {
                     <XAxis dataKey="tool" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
                     <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                     <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(0)}%`} />
-                    <Bar dataKey="pctVerderGebruiken" radius={[8, 8, 0, 0]} fill="#00A4A8" name={t('dashboard.kpiVerder')} />
+                    <Bar dataKey="pctVerderGebruiken" radius={[8, 8, 0, 0]} fill="#E6F8F9" stroke="#008C8A" strokeWidth={1.5} name={t('dashboard.kpiVerder')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -429,7 +429,7 @@ export function DashboardPage() {
                     <XAxis dataKey="tool" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
                     <YAxis domain={[0, 5]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                     <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(1).replace('.', ',')} / 5`} />
-                    <Bar dataKey="gemKwaliteit" radius={[8, 8, 0, 0]} fill="#2455A2" name={t('dashboard.kpiKwaliteit')} />
+                    <Bar dataKey="gemKwaliteit" radius={[8, 8, 0, 0]} fill="#F0F7FF" stroke="#2455A2" strokeWidth={1.5} name={t('dashboard.kpiKwaliteit')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -450,8 +450,8 @@ export function DashboardPage() {
                     <XAxis dataKey="tool" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
                     <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                     <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(v: unknown) => `${(v as number).toFixed(0)}%`} />
-                    <Bar dataKey="pctNieuwWerk" radius={[8, 8, 0, 0]} fill="#6F65AA" name={t('dashboard.kpiNieuwWerk')} />
-                    <Bar dataKey="pctMeertijdAnalyse" radius={[8, 8, 0, 0]} fill="#A78BFA" name={t('dashboard.kpiMeertijd')} />
+                    <Bar dataKey="pctNieuwWerk" radius={[8, 8, 0, 0]} fill="#F5F3FA" stroke="#6F65AA" strokeWidth={1.5} name={t('dashboard.kpiNieuwWerk')} />
+                    <Bar dataKey="pctMeertijdAnalyse" radius={[8, 8, 0, 0]} fill="#E1DBED" stroke="#6F65AA" strokeWidth={1.5} name={t('dashboard.kpiMeertijd')} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
