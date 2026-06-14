@@ -93,6 +93,7 @@ export interface ToolSummary {
   bespaardPerMaandUur: number; // can be negative!
   gemKwaliteit: number | null;
   pctVerderGebruiken: number | null;
+  gemProcentueleBesparing: number | null;
 }
 
 export function computePerTool(experiments: Experiment[]): ToolSummary[] {
@@ -112,6 +113,7 @@ export function computePerTool(experiments: Experiment[]): ToolSummary[] {
       bespaardPerMaandUur: totalMin / 60,
       gemKwaliteit: avg(exps.map((e) => e.kwaliteitScore)),
       pctVerderGebruiken: pct(exps.filter((e) => e.verderGebruiken).length, n),
+      gemProcentueleBesparing: avg(derived.map((d) => d.procentueleBesparing).filter((p): p is number => p !== null)),
     };
   });
 }

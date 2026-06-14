@@ -18,6 +18,8 @@ import {
   ResponsiveContainer,
   ReferenceLine,
   Cell,
+  ComposedChart,
+  Line,
 } from 'recharts';
 import { Clock, FlaskConical, TrendingDown, TrendingUp } from 'lucide-react';
 
@@ -83,16 +85,36 @@ function SectionTitle({ children, dark, color }: { children: React.ReactNode; da
 
 // ─── Custom Tooltip ───────────────────────────────────────────────────────────
 
-function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number }>; label?: string }) {
+function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; name?: string; dataKey?: string }>; label?: string }) {
   if (!active || !payload?.length) return null;
-  const val = payload[0].value;
-  const isNeg = val < 0;
+  
+  const valHours = payload.find((p) => p.dataKey === 'bespaardPerMaandUur')?.value;
+  const valPct = payload.find((p) => p.dataKey === 'gemProcentueleBesparing')?.value;
+  
+  const hasHours = valHours !== undefined;
+  const isNeg = hasHours && valHours < 0;
+
   return (
-    <div className="bg-white border border-slate-100 rounded-xl shadow-lg px-4 py-3 text-sm font-medium">
-      <p className="font-bold text-slate-800 mb-1">{label}</p>
-      <p className={isNeg ? 'text-red-600' : 'text-[#6EB550]'}>
-        {formatUren(val)}/mnd
-      </p>
+    <div className="bg-white border border-slate-100 rounded-xl shadow-lg px-4 py-3 text-sm font-medium min-w-[160px]">
+      <p className="font-bold text-slate-800 mb-2">{label}</p>
+      
+      {hasHours && (
+        <div className="flex items-center gap-2 mb-1">
+          <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: isNeg ? '#ef4444' : '#6EB550' }} />
+          <p className={isNeg ? 'text-red-600' : 'text-[#6EB550]'}>
+            {formatUren(valHours)}/mnd
+          </p>
+        </div>
+      )}
+      
+      {valPct !== undefined && valPct !== null && (
+        <div className="flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#2455A2]" />
+          <p className="text-[#2455A2]">
+            {valPct > 0 ? '+' : ''}{valPct.toFixed(1).replace('.', ',')}% tijdwinst
+          </p>
+        </div>
+      )}
     </div>
   );
 }
@@ -293,13 +315,19 @@ export function DashboardPage() {
               </SectionTitle>
               <p className="text-xs font-medium text-slate-400 mb-6 mt-1 ml-1">{t('dashboard.grafiek1Note')}</p>
               <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={perTool} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <ComposedChart data={perTool} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
                   <XAxis dataKey="tool" tick={<CustomXAxisTick />} axisLine={false} tickLine={false} interval={0} height={50} />
-                  <YAxis tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                  <ReferenceLine y={0} stroke="#cbd5e1" strokeDasharray="4 2" />
+                  
+                  <YAxis yAxisId="left" tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                  <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12, fill: '#94a3b8' }} axisLine={false} tickLine={false} tickFormatter={(v) => `${v}%`} />
+                  
+                  <ReferenceLine y={0} yAxisId="left" stroke="#cbd5e1" strokeDasharray="4 2" />
+                  
                   <Tooltip cursor={{ fill: '#f8fafc' }} content={<ChartTooltip />} />
+                  
                   <Bar
+                    yAxisId="left"
                     dataKey="bespaardPerMaandUur"
                     radius={[8, 8, 0, 0]}
                     name="Uren/maand"
@@ -308,7 +336,18 @@ export function DashboardPage() {
                       <Cell key={`cell-${index}`} fill={entry.bespaardPerMaandUur < 0 ? '#ef4444' : '#6EB550'} />
                     ))}
                   </Bar>
-                </BarChart>
+
+                  <Line 
+                    yAxisId="right"
+                    type="monotone" 
+                    dataKey="gemProcentueleBesparing" 
+                    name="% Tijdwinst" 
+                    stroke="#2455A2" 
+                    strokeWidth={3}
+                    dot={{ r: 4, strokeWidth: 2, fill: '#fff', stroke: '#2455A2' }} 
+                    activeDot={{ r: 6 }} 
+                  />
+                </ComposedChart>
               </ResponsiveContainer>
             </div>
           )}
