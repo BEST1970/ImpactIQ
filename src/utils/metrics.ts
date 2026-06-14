@@ -91,6 +91,7 @@ export interface ToolSummary {
   tool: string;
   experimenten: number;
   bespaardPerMaandUur: number; // can be negative!
+  basisVolumePerMaandUur: number;
   gemKwaliteit: number | null;
   pctVerderGebruiken: number | null;
   gemProcentueleBesparing: number | null;
@@ -106,11 +107,13 @@ export function computePerTool(experiments: Experiment[]): ToolSummary[] {
   return Array.from(byTool.entries()).map(([tool, exps]) => {
     const derived = exps.map(deriveMetrics);
     const totalMin = derived.reduce((s, d) => s + d.bespaardPerMaandMin, 0);
+    const basisMin = derived.reduce((s, d) => s + d.basisVolumePerMaandMin, 0);
     const n = exps.length;
     return {
       tool,
       experimenten: n,
       bespaardPerMaandUur: totalMin / 60,
+      basisVolumePerMaandUur: basisMin / 60,
       gemKwaliteit: avg(exps.map((e) => e.kwaliteitScore)),
       pctVerderGebruiken: pct(exps.filter((e) => e.verderGebruiken).length, n),
       gemProcentueleBesparing: avg(derived.map((d) => d.procentueleBesparing).filter((p): p is number => p !== null)),

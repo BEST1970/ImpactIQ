@@ -143,6 +143,9 @@ const fr = {
     verwijderTekst: 'Cette action est irr\u00e9versible.',
   },
   dashboard: {
+    experimentSingular: 'expérience',
+    experimentPlural: 'expériences',
+    basisVolume: 'Sur {{volume}} h/mois de volume normal',
     titel: 'Tableau de bord',
     subtitelEen: '1 exp\u00e9rience',
     subtitelVeel: '{{count}} exp\u00e9riences',

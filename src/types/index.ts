@@ -74,6 +74,7 @@ export interface DerivedMetrics {
   bespaardPerMaandMin: number;     // kan negatief zijn
   bespaardPerJaarUur: number;      // kan negatief zijn
   procentueleBesparing: number | null; // null als tijdVoor === 0
+  basisVolumePerMaandMin: number;
 }
 
 export function deriveMetrics(e: Experiment): DerivedMetrics {
@@ -81,9 +82,10 @@ export function deriveMetrics(e: Experiment): DerivedMetrics {
   const bespaardPerTaakMin = e.tijdVoor - e.tijdMet;
   const bespaardPerMaandMin = bespaardPerTaakMin * frequentiePerMaandVal;
   const bespaardPerJaarUur = (bespaardPerMaandMin * 12) / 60;
+  const basisVolumePerMaandMin = e.tijdVoor * frequentiePerMaandVal;
   const procentueleBesparing =
     e.tijdVoor > 0 ? (bespaardPerTaakMin / e.tijdVoor) * 100 : null;
-  return { frequentiePerMaandVal, bespaardPerTaakMin, bespaardPerMaandMin, bespaardPerJaarUur, procentueleBesparing };
+  return { frequentiePerMaandVal, bespaardPerTaakMin, bespaardPerMaandMin, bespaardPerJaarUur, procentueleBesparing, basisVolumePerMaandMin };
 }
 
 // ─── Migratie: oud formaat → nieuw formaat ────────────────────────────────────

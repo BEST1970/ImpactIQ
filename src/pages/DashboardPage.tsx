@@ -86,11 +86,13 @@ function SectionTitle({ children, dark, color }: { children: React.ReactNode; da
 // ─── Custom Tooltip ───────────────────────────────────────────────────────────
 
 function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) {
+  const { t } = useTranslation();
   if (!active || !payload?.length) return null;
   
   const valHours = payload.find((p) => p.dataKey === 'bespaardPerMaandUur')?.value;
   const valPct = payload.find((p) => p.dataKey === 'gemProcentueleBesparing')?.value;
   const experimenten = payload[0]?.payload?.experimenten;
+  const basisVolume = payload[0]?.payload?.basisVolumePerMaandUur;
   
   const hasHours = valHours !== undefined;
   const isNeg = hasHours && valHours < 0;
@@ -103,7 +105,16 @@ function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: 
         <div className="flex items-center gap-2 mb-1">
           <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
           <p className="text-slate-600">
-            {experimenten} {experimenten === 1 ? 'experiment' : 'experimenten'}
+            {experimenten} {experimenten === 1 ? t('dashboard.experimentSingular', 'experiment') : t('dashboard.experimentPlural', 'experimenten')}
+          </p>
+        </div>
+      )}
+
+      {basisVolume !== undefined && (
+        <div className="flex items-center gap-2 mb-1">
+          <span className="w-2.5 h-2.5 rounded-full bg-slate-200" />
+          <p className="text-slate-500">
+            {t('dashboard.basisVolume', 'Op {{volume}} u/mnd normaal volume', { volume: formatUren(basisVolume).replace(' u', '').replace('+', '').replace('-', '') })}
           </p>
         </div>
       )}

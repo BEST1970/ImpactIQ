@@ -143,6 +143,9 @@ const en = {
     verwijderTekst: 'This action cannot be undone.',
   },
   dashboard: {
+    experimentSingular: 'experiment',
+    experimentPlural: 'experiments',
+    basisVolume: 'On {{volume}} h/mo normal volume',
     titel: 'Dashboard',
     subtitelEen: '1 experiment',
     subtitelVeel: '{{count}} experiments',

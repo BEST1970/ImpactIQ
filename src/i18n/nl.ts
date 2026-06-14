@@ -143,6 +143,9 @@ const nl = {
     verwijderTekst: 'Dit kan niet ongedaan gemaakt worden.',
   },
   dashboard: {
+    experimentSingular: 'experiment',
+    experimentPlural: 'experimenten',
+    basisVolume: 'Op {{volume}} u/mnd normaal volume',
     titel: 'Dashboard',
     subtitelEen: '1 experiment',
     subtitelVeel: '{{count}} experimenten',
